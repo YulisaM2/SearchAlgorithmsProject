@@ -4,7 +4,7 @@ class Tile:
     def __init__(self, value: Optional[int]):
         self.value = value
     
-    def value(self) -> Optional[int]:
+    def get_value(self) -> Optional[int]:
         return self.value
     
     def reprJSON(self) -> Dict:

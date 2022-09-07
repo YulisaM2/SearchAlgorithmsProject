@@ -1,4 +1,6 @@
 from typing import List, Tuple, Dict
+from copy import deepcopy
+import numpy as np
 
 from .tile import Tile, new_empty_tile, new_tile
 
@@ -22,10 +24,12 @@ class Board:
         self.tiles[position_2[0]][position_2[1]] = self.tiles[position_1[0]][position_1[1]]
         self.tiles[position_1[0]][position_1[1]] = temp
 
-        if self.tiles[position_1[0]][position_1[1]] is None:
+        if self.tiles[position_1[0]][position_1[1]].get_value() is None:
             self.empty_position = (position_1[0], position_1[1])
-        elif self.tiles[position_2[0]][position_2[1]] is None:
+        elif self.tiles[position_2[0]][position_2[1]].get_value() is None:
             self.empty_position = (position_2[0], position_2[1])
+        else:
+            print("ERROR: moved something that wasn't the empty tile!")
         
         return None
     
@@ -37,6 +41,22 @@ class Board:
     
     def reprJSON(self) -> Dict:
         return dict(size=self.size, tiles=self.tiles, empty_position=self.empty_position)
+    
+    def display(self) -> str:
+        result = []
+        for row_tile in self.tiles:
+            row_res = []
+            for tile in row_tile:
+                value = tile.get_value()
+                if value is None:
+                    row_res.append("0")
+                    continue
+                row_res.append(str(value))
+            result.append(", ".join(row_res))
+        return "\n".join(result)
+    
+    def to_np_matrix(self):
+        return list(map(lambda tile_row : list(map(lambda tile : tile.get_value() if tile.get_value() is not None else np.empty, tile_row)), self.tiles))
 
 def new_solved_board(size: int) -> Board:
     tiles: List[Tile] = []

@@ -42,7 +42,7 @@ class Problem(ABCProblem):
         """Return the cost of applying an action to a state."""
         return 1
 
-def new_random_problem(size: int, seed: int) -> Problem:
+def new_random_problem(size: int, seed: int, min_actions: int, max_actions: int) -> Problem:
     """Construct a random problem."""
     this_board = new_solved_board(size)
 
@@ -55,7 +55,7 @@ def new_random_problem(size: int, seed: int) -> Problem:
 
     random.seed(seed)
 
-    n_steps = random.randrange(30, 200)
+    n_steps = random.randrange(min_actions, max_actions)
 
     for _step_no in range(n_steps):
         this_action = random.choice(actions)

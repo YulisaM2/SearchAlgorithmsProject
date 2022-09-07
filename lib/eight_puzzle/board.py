@@ -36,6 +36,12 @@ class Board(ABCState):
     
     def reprJSON(self) -> Dict:
         return dict(board=self.board)
+    
+    def display(self) -> str:
+        return self.board.display()
+
+    def to_np_matrix(self):
+        return self.board.to_np_matrix()
 
 def new_solved_board(size: int) -> Board:
     """Construct a new solved board."""
