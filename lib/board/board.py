@@ -56,7 +56,8 @@ class Board:
         return "\n".join(result)
     
     def to_np_matrix(self):
-        return list(map(lambda tile_row : list(map(lambda tile : tile.get_value() if tile.get_value() is not None else np.empty, tile_row)), self.tiles))
+        l = list(map(lambda tile_row : list(map(lambda tile : tile.get_value() if tile.get_value() is not None else np.empty, tile_row)), self.tiles))
+        return np.mat(l)
 
 def new_solved_board(size: int) -> Board:
     tiles: List[Tile] = []
